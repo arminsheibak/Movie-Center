@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-
-interface Movie {
-  id: number;
-  title: string;
-
-}
+import Movie from "../entities/movies";
 
 interface FetchMoviesResponse {
   page: number;
