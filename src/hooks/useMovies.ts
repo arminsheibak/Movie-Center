@@ -14,9 +14,10 @@ const useMovies = () => {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     apiClient.get<FetchMoviesResponse>('popular')
-    .then(res => setMovies(res.data.results))
-    .catch(err => setError(err.message))
+    .then(res =>{ setMovies(res.data.results); setLoading(false)})
+    .catch(err => {setError(err.message); setLoading(false) })
     
   }, []);
 

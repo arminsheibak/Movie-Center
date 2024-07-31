@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <HStack paddingX='20px'  alignItems='center' >
       <Image src={logo} boxSize='60px' objectFit='cover' />
-      <Hide below='sm' >
+      <Hide below='md' >
         <Box paddingBottom='7px'>
           <Heading as='h1' color='whitesmoke' >Movie Center</Heading>
         </Box>
