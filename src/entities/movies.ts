@@ -5,6 +5,7 @@ interface Movie {
   genre_ids: number[];
   release_date: string;
   adult: boolean;
+  vote_average: number;
 }
 
 export default Movie

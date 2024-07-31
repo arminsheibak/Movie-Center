@@ -2,6 +2,7 @@ import Movie from "../entities/movies";
 import { Card, Image, Heading, SimpleGrid, Tag, HStack, Text, Flex, Box, Icon } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import { MdNoAdultContent } from "react-icons/md";
+import VotesAvgBadge from "./VotesAvgBadge";
 
 
 interface Props {
@@ -21,7 +22,10 @@ const MovieCard = ({ movie }: Props) => {
           <Flex direction='column' justifyContent='space-between'  paddingX={3} paddingY={2}>
               <Box>
                 <Heading paddingLeft={1} marginTop={1}  fontSize="xl">{movie.title}</Heading>
-              <Icon color={!movie.adult ? 'green.300' : 'red'} boxSize={6} marginTop='3px' marginLeft='2.5px'  as={MdNoAdultContent}  />
+              <HStack marginTop='3.5px' marginLeft='2.5px'  >
+                <Icon color={!movie.adult ? 'green.300' : 'red'} boxSize={6} as={MdNoAdultContent}  />
+                <VotesAvgBadge rate={parseFloat(movie.vote_average.toFixed(2))} />
+              </HStack>
               </Box>
               <Box>
                 <Text color='#CBD5E0' fontSize='sm' paddingLeft='1' marginBottom='4px' >Release Date: {movie.release_date.split('-').join('/')}</Text>
