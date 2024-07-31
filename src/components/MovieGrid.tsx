@@ -6,7 +6,7 @@ import MovieCardSkeleton from "./MovieCardSkeleton"
 
 const MovieGrid = () => {
   const {movies, error, isLoading} = useMovies()
-  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 
   

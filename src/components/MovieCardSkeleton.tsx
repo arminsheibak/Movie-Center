@@ -2,7 +2,7 @@ import { Card, CardBody, SimpleGrid, Skeleton, SkeletonText } from "@chakra-ui/r
 
 const MovieCardSkeleton = () => {
   return (
-    <Card direction='row' height='120px' >
+    <Card borderRadius={5} direction='row' height='135px' >
       <SimpleGrid templateColumns='90px 1fr' >
         <Skeleton />
       </SimpleGrid>
