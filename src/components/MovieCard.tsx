@@ -1,6 +1,8 @@
 import Movie from "../entities/movies";
-import { Card, Image, Heading, SimpleGrid, GridItem, Tag, HStack, Text } from "@chakra-ui/react";
+import { Card, Image, Heading, SimpleGrid, Tag, HStack, Text, Flex, Box, Icon } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
+import { MdNoAdultContent } from "react-icons/md";
+
 
 interface Props {
   movie: Movie;
@@ -11,16 +13,21 @@ const MovieCard = ({ movie }: Props) => {
 
   return (
     <Card borderRadius={5} overflow="hidden" direction='row'>
-          <SimpleGrid templateColumns='140px 1fr' >
-            <Image
-              src={`https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
-              objectFit="cover"
-            />
-          <GridItem padding={4}>
-              <Heading  fontSize="md">{movie.title}</Heading>
-              <Text color='#CBD5E0'>Release Date: {movie.release_date.split('-').join('/')}</Text>
-              <HStack spacing={1.5} flexWrap='wrap' >{genres.map(g => <Tag key={g.id} >{g.name}</Tag  >)}</HStack>
-          </GridItem>
+          <SimpleGrid templateColumns='90px 1fr'>
+              <Image
+                src={`https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+                objectFit="cover"
+              />
+          <Flex direction='column' justifyContent='space-between'  paddingX={3} paddingY={2}>
+              <Box>
+                <Heading paddingLeft={1} marginTop={1}  fontSize="xl">{movie.title}</Heading>
+              <Icon color={!movie.adult ? 'green.300' : 'red'} boxSize={6} marginTop='3px' marginLeft='2.5px'  as={MdNoAdultContent}  />
+              </Box>
+              <Box>
+                <Text color='#CBD5E0' fontSize='sm' paddingLeft='1' marginBottom='4px' >Release Date: {movie.release_date.split('-').join('/')}</Text>
+                <HStack spacing={1.5} flexWrap='wrap' >{genres.map(g => <Tag colorScheme='black' color='whitesmoke' size='sm'  key={g.id} >{g.name}</Tag  >)}</HStack>
+              </Box>
+          </Flex>
           </SimpleGrid>
     </Card>
   );
