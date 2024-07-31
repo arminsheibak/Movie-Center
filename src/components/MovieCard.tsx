@@ -1,11 +1,13 @@
 import Movie from "../entities/movies";
 import { Card, CardBody, Image, Heading, HStack, Box, SimpleGrid, VStack, Center, GridItem } from "@chakra-ui/react";
+import useGenres from "../hooks/useGenres";
 
 interface Props {
   movie: Movie;
 }
 
 const MovieCard = ({ movie }: Props) => {
+  const genres = useGenres(movie)
   return (
     <Card borderRadius={5} overflow="hidden" direction='row' >
           <SimpleGrid templateColumns='160px 1fr' >
@@ -15,6 +17,7 @@ const MovieCard = ({ movie }: Props) => {
             />
           <GridItem padding={4} >
             <Heading  fontSize="md">{movie.title}</Heading>
+            {genres.map(g => <p>{g.name}</p>)}
           </GridItem>
           </SimpleGrid>
     </Card>

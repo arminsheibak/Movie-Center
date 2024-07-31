@@ -5,6 +5,8 @@ import MovieCard from "./MovieCard"
 
 const MovieGrid = () => {
   const {movies, error} = useMovies()
+
+  
   
   return (
     <>
