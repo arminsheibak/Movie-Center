@@ -1,5 +1,5 @@
 import Movie from "../entities/movies";
-import { Card, CardBody, Image, Heading, HStack, Box, SimpleGrid, VStack, Center, GridItem } from "@chakra-ui/react";
+import { Card, Image, Heading, SimpleGrid, GridItem, Tag, HStack, Text } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 
 interface Props {
@@ -8,16 +8,18 @@ interface Props {
 
 const MovieCard = ({ movie }: Props) => {
   const genres = useGenres(movie)
+
   return (
-    <Card borderRadius={5} overflow="hidden" direction='row' >
-          <SimpleGrid templateColumns='160px 1fr' >
+    <Card borderRadius={5} overflow="hidden" direction='row'>
+          <SimpleGrid templateColumns='140px 1fr' >
             <Image
               src={`https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
               objectFit="cover"
             />
-          <GridItem padding={4} >
-            <Heading  fontSize="md">{movie.title}</Heading>
-            {genres.map(g => <p>{g.name}</p>)}
+          <GridItem padding={4}>
+              <Heading  fontSize="md">{movie.title}</Heading>
+              <Text color='#CBD5E0'>Release Date: {movie.release_date.split('-').join('/')}</Text>
+              <HStack spacing={1.5} flexWrap='wrap' >{genres.map(g => <Tag key={g.id} >{g.name}</Tag  >)}</HStack>
           </GridItem>
           </SimpleGrid>
     </Card>
