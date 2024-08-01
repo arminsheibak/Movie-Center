@@ -30,8 +30,8 @@ const MovieCard = ({ movie }: Props) => {
               </HStack>
               </Box>
               <Box>
-                <Text color='#CBD5E0' fontSize='sm' paddingLeft='1' marginBottom='4px' >Release Date: {movie.release_date.split('-').join('/')}</Text>
-                <HStack spacing={1.5} flexWrap='wrap' >{genres.map(g => <Tag colorScheme='black' color='whitesmoke' size='sm'  key={g.id} >{g.name}</Tag  >)}</HStack>
+                <Text  fontSize='sm' paddingLeft='1' marginBottom='4px' >Release Date: {movie.release_date.split('-').join('/')}</Text>
+                <HStack spacing={1.5} flexWrap='wrap' >{genres.map(g => <Tag bg='rgba(255 255, 255, 0.12)' color='whitesmoke' size='sm'  key={g.id} >{g.name}</Tag  >)}</HStack>
               </Box>
           </Flex>
           </SimpleGrid>
