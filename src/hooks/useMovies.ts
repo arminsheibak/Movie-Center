@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import Movie from "../entities/movies";
-import Genre from "../entities/genres";
+import { MovieQuery } from "../components/MovieGrid";
 
 interface FetchMoviesResponse {
   page: number;
@@ -9,18 +9,18 @@ interface FetchMoviesResponse {
 }
 
 
-const useMovies = (selectedGenre: Genre | null) => {
+const useMovies = (movieQuery: MovieQuery) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    apiClient.get<FetchMoviesResponse>('discover/movie', { params: {with_genres: selectedGenre?.id} })
+    apiClient.get<FetchMoviesResponse>('discover/movie', { params: {with_genres: movieQuery.genre?.id } })
     .then(res =>{ setMovies(res.data.results); setLoading(false)})
     .catch(err => {setError(err.message); setLoading(false) })
     
-  }, [selectedGenre?.id]);
+  }, [movieQuery]);
 
   return {movies, error, isLoading}
 }
