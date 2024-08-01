@@ -1,13 +1,15 @@
-import { SimpleGrid } from "@chakra-ui/react"
+import { HStack, SimpleGrid } from "@chakra-ui/react"
 import useMovies from "../hooks/useMovies"
 import MovieCard from "./MovieCard"
 import MovieCardSkeleton from "./MovieCardSkeleton"
 import GenreSelector from "./GenreSelector"
 import { useState } from "react"
 import Genre from "../entities/genres"
+import SortSelector from "./SortSelector"
 
 export interface MovieQuery {
-  genre: Genre | null
+  genre: Genre | null;
+  sortOrder: string;
 }
 
 const MovieGrid = () => {
@@ -22,7 +24,10 @@ const MovieGrid = () => {
   return (
     <>
     {error && <p>{error}</p>}
-    <GenreSelector onSelectGenre={genre => setMovieQuery({...movieQuery, genre}) } />
+    <HStack spacing={4} >
+      <GenreSelector onSelectGenre={genre => setMovieQuery({...movieQuery, genre}) } />
+      <SortSelector onSelectOrder={sortOrder => setMovieQuery({...movieQuery, sortOrder}) } />
+    </HStack>
     <SimpleGrid columns={{base: 1, md: 2, xl: 3}} spacing={5} marginTop={5} >
       {isLoading && skeletons.map((s) => <MovieCardSkeleton key={s} />) }
       {movies.map(movie => <MovieCard key={movie.id} movie={movie} />)}

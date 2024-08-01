@@ -16,7 +16,7 @@ const useMovies = (movieQuery: MovieQuery) => {
 
   useEffect(() => {
     setLoading(true);
-    apiClient.get<FetchMoviesResponse>('discover/movie', { params: {with_genres: movieQuery.genre?.id } })
+    apiClient.get<FetchMoviesResponse>('discover/movie', { params: {with_genres: movieQuery.genre?.id, sort_by: movieQuery.sortOrder } })
     .then(res =>{ setMovies(res.data.results); setLoading(false)})
     .catch(err => {setError(err.message); setLoading(false) })
     
