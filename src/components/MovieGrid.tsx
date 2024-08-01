@@ -12,9 +12,13 @@ export interface MovieQuery {
   sortOrder: string;
 }
 
-const MovieGrid = () => {
+interface Props {
+  searchText: string;
+}
+
+const MovieGrid = ({searchText}: Props) => {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const {movies, error, isLoading} = useMovies(movieQuery)
+  const {movies, error, isLoading} = useMovies(movieQuery, searchText)
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   
