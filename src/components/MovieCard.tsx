@@ -3,6 +3,7 @@ import { Card, Image, Heading, SimpleGrid, Tag, HStack, Text, Flex, Box, Icon } 
 import useGenres from "../hooks/useGenres";
 import { MdNoAdultContent } from "react-icons/md";
 import VotesAvgBadge from "./VotesAvgBadge";
+import defaultImage from '../assets/default.jpg'
 
 
 interface Props {
@@ -11,12 +12,13 @@ interface Props {
 
 const MovieCard = ({ movie }: Props) => {
   const genres = useGenres(movie)
+  const imageUrl = `https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`
 
   return (
     <Card borderRadius={5} overflow="hidden" direction='row'>
           <SimpleGrid templateColumns='100px 1fr'>
               <Image
-                src={`https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+                src={movie.poster_path ? imageUrl : defaultImage}
                 objectFit="cover"
               />
           <Flex direction='column' justifyContent='space-between'  paddingX={3} paddingY={2}>
