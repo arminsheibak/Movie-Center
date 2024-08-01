@@ -8,7 +8,7 @@ const App = () => {
       <GridItem area="nav">
         <NavBar />
       </GridItem>
-      <GridItem area="main">
+      <GridItem padding={5} area="main">
         <MovieGrid />
       </GridItem>
     </Grid>

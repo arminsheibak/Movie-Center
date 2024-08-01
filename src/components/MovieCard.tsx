@@ -14,7 +14,7 @@ const MovieCard = ({ movie }: Props) => {
 
   return (
     <Card borderRadius={5} overflow="hidden" direction='row'>
-          <SimpleGrid templateColumns='90px 1fr'>
+          <SimpleGrid templateColumns='100px 1fr'>
               <Image
                 src={`https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
                 objectFit="cover"
