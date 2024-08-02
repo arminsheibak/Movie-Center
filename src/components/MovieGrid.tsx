@@ -6,22 +6,19 @@ import GenreSelector from "./GenreSelector";
 import React from "react";
 import SortSelector from "./SortSelector";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useMovieQueryStore from "../movieQueryStore";
+import useSearchTextStore from "../searchTextStore";
 
-interface Props {
-  searchText: string;
-}
 
-const MovieGrid = ({ searchText }: Props) => {
-  const movieQuery = useMovieQueryStore((s) => s.movieQuery);
+const MovieGrid = () => {
   const {
     data: movies,
     error,
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useMovies(movieQuery, searchText);
+  } = useMovies();
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const searchText = useSearchTextStore(s => s.searchText)
 
   const fetchedMoviesCount =
     movies?.pages.reduce((total, page) => total + page.results.length, 0) || 0;

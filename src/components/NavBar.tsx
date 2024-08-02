@@ -4,11 +4,7 @@ import AsidePanel from "./AsidePanel"
 import SearchInput from "./SearchInput"
 
 
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-
-const NavBar = ({onSearch}: Props) => {
+const NavBar = () => {
   return (
     <HStack paddingX='20px' paddingTop='10px'  alignItems='center' >
       <HStack flexShrink='0' >
@@ -17,7 +13,7 @@ const NavBar = ({onSearch}: Props) => {
             <Heading fontSize='xl' display='inline-block' as='h1' color='whitesmoke' >Movie Center</Heading>
         </Hide>
       </HStack>
-      <SearchInput onSearch={onSearch} />
+      <SearchInput />
       <AsidePanel />
     </HStack>
   )
