@@ -1,15 +1,12 @@
 import { Menu, MenuButton, Button, MenuList, MenuItem } from '@chakra-ui/react'
 import genres from '../data/genres';
 import { BsChevronDown } from "react-icons/bs";
-import Genre from '../entities/genres';
 import { useState } from 'react';
+import useMovieQueryStore from '../movieQueryStore';
 
 
-interface Props {
-  onSelectGenre: (genre: Genre) => void;
-}
-
-const GenreSelector = ({onSelectGenre}: Props) => {
+const GenreSelector = () => {
+  const setGenre = useMovieQueryStore(s => s.setGenreId);
   const [genreName, setGenreName] = useState('');
 
   return (
@@ -18,7 +15,7 @@ const GenreSelector = ({onSelectGenre}: Props) => {
     {genreName ?  genreName : 'Select a Genre'}
   </MenuButton>
   <MenuList>
-    {genres.map(genre => <MenuItem key={genre.id} onClick={() => {onSelectGenre(genre); setGenreName(genre.name) }} >{genre.name}</MenuItem>)}
+    {genres.map(genre => <MenuItem key={genre.id} onClick={() => {setGenre(genre.id); setGenreName(genre.name) }} >{genre.name}</MenuItem>)}
   </MenuList>
 </Menu>
   )
