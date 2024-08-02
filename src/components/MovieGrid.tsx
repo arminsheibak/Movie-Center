@@ -18,7 +18,7 @@ interface Props {
 
 const MovieGrid = ({searchText}: Props) => {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const {movies, error, isLoading} = useMovies(movieQuery, searchText)
+  const {data: movies , error, isLoading} = useMovies(movieQuery, searchText)
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   
@@ -27,14 +27,14 @@ const MovieGrid = ({searchText}: Props) => {
   
   return (
     <>
-    {error && <p>{error}</p>}
-    <HStack spacing={4} >
+    {!searchText && <HStack spacing={4} >
       <GenreSelector onSelectGenre={genre => setMovieQuery({...movieQuery, genre}) } />
       <SortSelector onSelectOrder={sortOrder => setMovieQuery({...movieQuery, sortOrder}) } />
-    </HStack>
+    </HStack>}
+    {error && <p>{error.message}</p>}
     <SimpleGrid columns={{base: 1, md: 2, xl: 3}} spacing={5} marginTop={5} >
       {isLoading && skeletons.map((s) => <MovieCardSkeleton key={s} />) }
-      {movies.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+      {movies?.results.map(movie => <MovieCard key={movie.id} movie={movie} />)}
     </SimpleGrid>
     </>
   )
