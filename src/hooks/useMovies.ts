@@ -1,21 +1,22 @@
 import apiClient from "../services/api-client";
 import Movie from "../entities/movies";
 import { MovieQuery } from "../components/MovieGrid";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface FetchMoviesResponse {
   page: number;
   results: Movie[];
+  total_pages: number;
 }
 
 const useMovies = (movieQuery: MovieQuery, searchText: string) =>
-  useQuery<FetchMoviesResponse, Error>({
+  useInfiniteQuery<FetchMoviesResponse, Error>({
     queryKey: ["movies", movieQuery, searchText],
-    queryFn: () => {
+    queryFn: ({pageParam = 1}) => {
       if (searchText) {
         return apiClient
           .get<FetchMoviesResponse>("search/movie", {
-            params: { query: searchText, include_adult: true },
+            params: { query: searchText, include_adult: true, page: pageParam },
           })
           .then((res) => res.data);
       } else {
@@ -25,11 +26,15 @@ const useMovies = (movieQuery: MovieQuery, searchText: string) =>
               with_genres: movieQuery.genre?.id,
               sort_by: movieQuery.sortOrder,
               include_adult: true,
+              page: pageParam
             },
           })
           .then((res) => res.data);
       }
     },
+    getNextPageParam: (lastPage, allPages ) => {
+      return (allPages.length + 2 > lastPage.total_pages ) ? undefined : allPages.length + 1
+    }
   });
 
 export default useMovies;
