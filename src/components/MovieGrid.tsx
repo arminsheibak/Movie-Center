@@ -9,7 +9,7 @@ import SortSelector from "./SortSelector";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export interface MovieQuery {
-  genre: Genre | null;
+  genre?: Genre ;
   sortOrder: string;
 }
 
