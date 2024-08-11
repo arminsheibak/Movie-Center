@@ -40,7 +40,7 @@ const useMovies = () => {
     getNextPageParam: (lastPage, allPages ) => {
       return (allPages.length + 2 > lastPage.total_pages ) ? undefined : allPages.length + 1
     },
-    staleTime: ms('24h'),
+    staleTime: ms('10m'),
   });
 
 }

@@ -4,6 +4,7 @@ import useGenres from "../hooks/useGenres";
 import { MdNoAdultContent } from "react-icons/md";
 import VotesAvgBadge from "./VotesAvgBadge";
 import defaultImage from '../assets/default.jpg'
+import { Link } from "react-router-dom";
 
 
 interface Props {
@@ -17,13 +18,17 @@ const MovieCard = ({ movie }: Props) => {
   return (
     <Card borderRadius={5} overflow="hidden" direction='row'>
           <SimpleGrid templateColumns='100px 1fr'>
-              <Image
-                src={movie.poster_path ? imageUrl : defaultImage}
-                objectFit="cover"
-              />
+              <Link to={`/movies/${movie.id}`} >
+                <Image
+                  src={movie.poster_path ? imageUrl : defaultImage}
+                  objectFit="cover"
+                />
+              </Link>
           <Flex direction='column' justifyContent='space-between'  paddingX={3} paddingY={2}>
               <Box>
+              <Link to={`/movies/${movie.id}`} >
                 <Heading paddingLeft={1} marginTop={1}  fontSize="xl">{movie.title}</Heading>
+              </Link>
               <HStack marginTop='3.5px' marginLeft='2.5px'  >
                 <Icon color={!movie.adult ? 'green.300' : 'red'} boxSize={6} as={MdNoAdultContent}  />
                 <VotesAvgBadge rate={parseFloat(movie.vote_average.toFixed(2))} />
