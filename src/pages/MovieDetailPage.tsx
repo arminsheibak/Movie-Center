@@ -1,18 +1,33 @@
 import { Link, useParams } from "react-router-dom";
 import useMovie from "../hooks/useMovie";
-import { Box, Heading, Image, Show, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Heading,
+  Image,
+  Show,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import { FaImdb } from "react-icons/fa";
 import VotesAvgBadge from "../components/VotesAvgBadge";
+import useCast from "../hooks/useCast";
+import defaultProfile from "../assets/default-profile.jpg";
+import { useState } from "react";
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();
   const { data: movie, error } = useMovie(movieId!);
+  const [allCast, setAllCast] = useState(false);
+  const { data: castData } = useCast(movieId!);
   const posterUrl = `https://media.themoviedb.org/t/p/w600_and_h900_face${movie?.poster_path}`;
   const backDropUrl = `https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path}`;
+  const cast = allCast ? castData?.cast : castData?.cast.slice(0, 6);
 
   if (error) {
     throw new Error();
-
   }
   return (
     <>
@@ -46,7 +61,7 @@ const MovieDetailPage = () => {
                 {g.name}
               </Text>
             ))}
-            <Box display='flex'alignItems='flex-end' >
+            <Box display="flex" alignItems="flex-end">
               <Text
                 display="inline-block"
                 mr={2}
@@ -62,13 +77,20 @@ const MovieDetailPage = () => {
               >
                 {movie?.release_date.split("-").join("/")}
               </Text>
-              <VotesAvgBadge rate={parseFloat(movie?.vote_average.toFixed(2)!)} />
+              <VotesAvgBadge
+                rate={parseFloat(movie?.vote_average.toFixed(2)!)}
+              />
             </Box>
             <Link
               to={`https://www.imdb.com/title/${movie?.imdb_id}`}
-              target='_blank'
+              target="_blank"
             >
-              <Box mt={1} position="relative" display="flex" alignItems="center">
+              <Box
+                mt={1}
+                position="relative"
+                display="flex"
+                alignItems="center"
+              >
                 <Box
                   bgColor="black"
                   display="inline-block"
@@ -106,6 +128,34 @@ const MovieDetailPage = () => {
           <Text textAlign="justify">{movie?.overview}</Text>
         </Box>
       </Show>
+      <Box marginX={5} marginTop={10} >
+        <Heading mt={6} mb={5} fontSize={20} as={"h3"}>
+          Cast :
+        </Heading>
+        <SimpleGrid columns={{ base: 3, md: 5, xl: 7 }} spacing={3}>
+          {cast?.map((actor) => (
+            <Card borderRadius={15} overflow="hidden">
+              <Image
+                src={
+                  actor.profile_path
+                    ? `https://media.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`
+                    : defaultProfile
+                }
+                objectFit="cover"
+              />
+              <CardBody>
+                <Heading as="h3" fontWeight="600" fontSize={14}>
+                  {actor.name}
+                </Heading>
+                <Text fontSize={13}>{actor.character}</Text>
+              </CardBody>
+            </Card>
+          ))}
+        </SimpleGrid>
+         {!allCast && <Box mt={4}  >
+            <Button onClick={() => setAllCast(true)} >Show All the Cast</Button>
+          </Box>}
+      </Box>
     </>
   );
 };
