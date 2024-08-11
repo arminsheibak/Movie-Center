@@ -16,12 +16,17 @@ import VotesAvgBadge from "../components/VotesAvgBadge";
 import useCast from "../hooks/useCast";
 import defaultProfile from "../assets/default-profile.jpg";
 import { useState } from "react";
+import useImages from "../hooks/useImages";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();
   const { data: movie, error } = useMovie(movieId!);
   const [allCast, setAllCast] = useState(false);
   const { data: castData } = useCast(movieId!);
+  const { data: images } = useImages(movieId!);
   const posterUrl = `https://media.themoviedb.org/t/p/w600_and_h900_face${movie?.poster_path}`;
   const backDropUrl = `https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path}`;
   const cast = allCast ? castData?.cast : castData?.cast.slice(0, 6);
@@ -128,13 +133,13 @@ const MovieDetailPage = () => {
           <Text textAlign="justify">{movie?.overview}</Text>
         </Box>
       </Show>
-      <Box marginX={5} marginTop={10} >
+      <Box marginX={5} marginTop={10}>
         <Heading mt={6} mb={5} fontSize={20} as={"h3"}>
           Cast :
         </Heading>
         <SimpleGrid columns={{ base: 3, md: 5, xl: 7 }} spacing={3}>
           {cast?.map((actor) => (
-            <Card borderRadius={15} overflow="hidden">
+            <Card key={actor.name} borderRadius={15} overflow="hidden">
               <Image
                 src={
                   actor.profile_path
@@ -152,9 +157,30 @@ const MovieDetailPage = () => {
             </Card>
           ))}
         </SimpleGrid>
-         {!allCast && <Box mt={4}  >
-            <Button onClick={() => setAllCast(true)} >Show All the Cast</Button>
-          </Box>}
+        <Box mt={4}>
+          <Button onClick={() => setAllCast(!allCast)}>
+            {allCast ? "Hide" : "Show All the Cast"}
+          </Button>
+        </Box>
+      </Box>
+      <Box marginX={5} marginTop={10}>
+        <Heading mt={6} mb={5} fontSize={20} as={"h3"}>
+          Photo Gallery:{" "}
+        </Heading>
+        <Carousel
+          infiniteLoop={true}
+          showThumbs={false}
+          showStatus={false}
+        >
+          {images?.backdrops.slice(0,10).map((image) => {
+              return (
+                  <Image
+                    key={image.file_path}
+                    src={`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${image.file_path}`}
+                  />
+              );
+          })}
+        </Carousel>
       </Box>
     </>
   );
