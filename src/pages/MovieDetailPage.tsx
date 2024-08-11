@@ -137,7 +137,7 @@ const MovieDetailPage = () => {
         <Heading mt={6} mb={5} fontSize={20} as={"h3"}>
           Cast :
         </Heading>
-        <SimpleGrid columns={{ base: 3, md: 5, xl: 7 }} spacing={3}>
+        <SimpleGrid columns={{ base: 2, md: 4, xl: 6 }} spacing={3}>
           {cast?.map((actor) => (
             <Card key={actor.name} borderRadius={15} overflow="hidden">
               <Image
@@ -164,9 +164,7 @@ const MovieDetailPage = () => {
         </Box>
       </Box>
       <Box marginX={5} marginTop={10}>
-        <Heading mt={6} mb={5} fontSize={20} as={"h3"}>
-          Photo Gallery:{" "}
-        </Heading>
+        <Heading mt={6} mb={5} fontSize={20} as={"h3"}>Photo Gallery:</Heading>
         <Carousel
           infiniteLoop={true}
           showThumbs={false}

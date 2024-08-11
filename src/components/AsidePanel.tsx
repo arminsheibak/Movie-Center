@@ -11,9 +11,6 @@ const AsidePanel = () => {
          <DrawerContent>
            <DrawerHeader borderBottomWidth='1px'>Movies</DrawerHeader>
            <DrawerBody>
-             <p>Some contents...</p>
-             <p>Some contents...</p>
-             <p>Some contents...</p>
            </DrawerBody>
          </DrawerContent>
      </Drawer>
